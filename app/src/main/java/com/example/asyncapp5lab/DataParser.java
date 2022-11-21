@@ -1,5 +1,6 @@
 package com.example.asyncapp5lab;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;
@@ -18,14 +19,20 @@ public class DataParser {
         }
 
         String result = "";
+        String conditionCodeStr ="";
+
         try{
             JSONObject jData = new JSONObject(data);
             JSONObject placeNode = jData.getJSONObject("place");
-            JSONObject coordinatesNode = placeNode.getJSONObject("coordinates");
-            String lat = coordinatesNode.getString("latitude");
-            String lon = coordinatesNode.getString("longitude");
-            String administrativeDivision = placeNode.getString("administrativeDivision");
-            result = String.format("location name: %s,\n lat: %s,\n lon: %s",administrativeDivision, lat, lon);
+            String nameNode = placeNode.getString("name");
+
+            //forecastTimestamps Arr
+            JSONArray forecastTimestampsArr = placeNode.getJSONArray("forecastTimestamps");
+            for(int i = 0; i < forecastTimestampsArr.length(); i++){
+                JSONObject innerObject = forecastTimestampsArr.getJSONObject(i);
+                conditionCodeStr = innerObject.getString("conditionCode");
+            }
+            result = String.format("Place: %s\n, Temperature: %s",nameNode, conditionCodeStr);
 
         } catch (JSONException e) {
             e.printStackTrace();
