@@ -11,19 +11,19 @@
         android:id="@+id/tvStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/blue"
+        android:background="@color/light_purple"
+        android:textColor="@color/dark_purple"
        android:lines="5"
-        android:text="wsbxqdbxw"
-        android:textColor="@color/white"
-        android:textSize="20sp"
+        android:text="Hello"
+        android:textSize="19sp"
         android:gravity="center"
         android:padding="20dp"/>
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/btnGetData"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="click"
+        android:text="click me"
         android:onClick="onBtnGetDataClick"/>
 
 </LinearLayout>

@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onBtnGetDataClick(View view){
-        this.tvStatus.setText("We will load something for you");
+        this.tvStatus.setText("loading something for you ...");
         getDataByAsyncTask();
         Toast.makeText(this, "Trust me, it will load some day", Toast.LENGTH_LONG).show();
     }
