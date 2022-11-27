@@ -24,25 +24,26 @@ public class DataParser {
         }
 
         String result = "";
-
-
         try{
             JSONObject jData = new JSONObject(data);
             JSONObject placeNode = jData.getJSONObject("place");
             String nameNode = placeNode.getString("name");
+            result = String.format("Place: %s\n",nameNode);
+            String time = "";
             String airTemperatureStr = "";
             String conditionCodeStr = "";
             Integer airTemperature = null;
 
             //forecastTimestamps Arr
             JSONArray forecastTimestampsArr = jData.getJSONArray("forecastTimestamps");
-            for(int i = 0; i < forecastTimestampsArr.length(); i++){
+            for(int i = 0; i < 16; i++){
                 JSONObject innerObject = forecastTimestampsArr.getJSONObject(i);
+                time = innerObject.getString("forecastTimeUtc");
                 conditionCodeStr = innerObject.getString("conditionCode");
                 airTemperature = innerObject.getInt("airTemperature");
                 airTemperatureStr = String.valueOf(airTemperature);
+                result += String.format("Time: %s\nCondition: %s\nTemperature: %s\n", time, conditionCodeStr,airTemperatureStr);
             }
-            result = String.format("Place: %s\nCondition: %s\nTemperature: %s", nameNode, conditionCodeStr,airTemperatureStr);
 
         } catch (JSONException e) {
             e.printStackTrace();
