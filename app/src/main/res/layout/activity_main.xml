@@ -12,10 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/blue"
-       android:lines="6"
+       android:lines="5"
         android:text="wsbxqdbxw"
         android:textColor="@color/white"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:gravity="center"
         android:padding="20dp"/>
 

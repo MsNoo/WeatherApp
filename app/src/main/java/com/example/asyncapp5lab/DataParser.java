@@ -26,7 +26,6 @@ public class DataParser {
             line = bufferedReader.readLine();
             data = data + line;
         }
-
         String result = "";
         try{
             JSONObject jData = new JSONObject(data);
@@ -34,8 +33,7 @@ public class DataParser {
             String nameNode = placeNode.getString("name");
             String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
             String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
-            result = String.format("%s\nCurrent time: %s %s\n",nameNode, currentDate, currentTime);
-
+            result = String.format("Your time: %s %s\n", currentDate, currentTime);
             String time = "";
             String conditionCodeStr = "";
             String airTemperature = "";
@@ -47,7 +45,7 @@ public class DataParser {
                     time = innerObject.getString("forecastTimeUtc");
                     conditionCodeStr = innerObject.getString("conditionCode");
                     airTemperature = innerObject.getString("airTemperature");
-                    result += String.format("%s\n%s\n%s°C\n", time, conditionCodeStr, airTemperature);
+                    result += String.format("Weather time: %s\n%s\n%s\n%s°C\n", time, nameNode, conditionCodeStr, airTemperature);
                 }
             }
         } catch (JSONException e) {
