@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AsyncApp(5lab)</string>
+    <string name="hello">Hello</string>
+    <string name="click">click me</string>
 </resources>
