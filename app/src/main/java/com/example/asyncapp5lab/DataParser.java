@@ -1,6 +1,7 @@
 package com.example.asyncapp5lab;
 
 import android.os.Build;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -9,7 +10,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -28,27 +32,27 @@ public class DataParser {
             JSONObject jData = new JSONObject(data);
             JSONObject placeNode = jData.getJSONObject("place");
             String nameNode = placeNode.getString("name");
-            result = String.format("Place: %s\n",nameNode);
+            String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+            String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+            result = String.format("%s\nCurrent time: %s %s\n",nameNode, currentDate, currentTime);
+
             String time = "";
-            String airTemperatureStr = "";
             String conditionCodeStr = "";
-            Integer airTemperature = null;
-
-            //forecastTimestamps Arr
+            String airTemperature = "";
             JSONArray forecastTimestampsArr = jData.getJSONArray("forecastTimestamps");
-            for(int i = 0; i < 16; i++){
+            for(int i = 0; i < forecastTimestampsArr.length(); i++){
                 JSONObject innerObject = forecastTimestampsArr.getJSONObject(i);
-                time = innerObject.getString("forecastTimeUtc");
-                conditionCodeStr = innerObject.getString("conditionCode");
-                airTemperature = innerObject.getInt("airTemperature");
-                airTemperatureStr = String.valueOf(airTemperature);
-                result += String.format("Time: %s\nCondition: %s\nTemperature: %s\n", time, conditionCodeStr,airTemperatureStr);
+                String tempStr = currentTime.substring(0,2);
+                if (innerObject.getString("forecastTimeUtc").equals(currentDate + " " + tempStr + ":00:00")){
+                    time = innerObject.getString("forecastTimeUtc");
+                    conditionCodeStr = innerObject.getString("conditionCode");
+                    airTemperature = innerObject.getString("airTemperature");
+                    result += String.format("%s\n%s\n%s°C\n", time, conditionCodeStr, airTemperature);
+                }
             }
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return result;
     }
-
 }
